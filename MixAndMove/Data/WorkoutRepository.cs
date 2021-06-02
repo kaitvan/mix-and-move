@@ -24,7 +24,7 @@ namespace MixAndMove.Data
             var sql = @"SELECT *
                         FROM Workouts
                         WHERE UserId = @userId";
-            return db.Query<Workout>(sql).ToList();
+            return db.Query<Workout>(sql, new { userId = userId }).ToList();
         }
     }
 }

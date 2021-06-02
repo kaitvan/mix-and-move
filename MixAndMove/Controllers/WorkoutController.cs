@@ -18,7 +18,7 @@ namespace MixAndMove.Controllers
             _repo = repo;
         }
 
-        [HttpGet("/{userId}")]
+        [HttpGet("{userId}")]
         public IActionResult GetAllWorkoutsByUser(int userId)
         {
             return Ok(_repo.GetAllWorkoutsByUser(userId));

@@ -36,6 +36,8 @@ namespace MixAndMove.Data
         public void AddUser(User user)
         {
             using var db = new SqlConnection(ConnectionString);
+            var userCreatedDate = DateTime.Now;
+            user.UserCreatedDate = userCreatedDate;
             var sql = @"INSERT INTO [dbo].[Users]
                                ([FirstName]
                                ,[LastName]
@@ -43,7 +45,8 @@ namespace MixAndMove.Data
                                ,[FirebaseUid]
                                ,[DisplayName]
                                ,[ProfilePicture]
-                               ,[EmailAddress])
+                               ,[EmailAddress]
+                               ,[Active])
                          VALUES
                                (@FirstName
                                ,@LastName
@@ -51,7 +54,8 @@ namespace MixAndMove.Data
                                ,@FirebaseUid
                                ,@DisplayName
                                ,@ProfilePicture
-                               ,@EmailAddress)";
+                               ,@EmailAddress
+                               ,@Active)";
             var id = db.ExecuteScalar<int>(sql, user);
             user.Id = id;
         }
@@ -59,8 +63,8 @@ namespace MixAndMove.Data
         public void DeleteUser(int id)
         {
             using var db = new SqlConnection(ConnectionString);
-            var sql = @"DELETE
-                        FROM Users
+            var sql = @"UPDATE [Users]
+                        SET Active = 0
                         WHERE Id = @id";
             db.Execute(sql, new { id });
         }
@@ -76,6 +80,7 @@ namespace MixAndMove.Data
                             ,[DisplayName] = @DisplayName
                             ,[ProfilePicture] = @ProfilePicture
                             ,[EmailAddress] = @EmailAddress
+                            ,[Active] = 1
                         WHERE Id = @id";
             db.Execute(sql, user);
         }
