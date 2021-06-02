@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MixAndMove.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,13 @@ namespace MixAndMove
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton(Configuration);
+            services.AddTransient<CategoryRepository>();
+            services.AddTransient<MovementRepository>();
+            services.AddTransient<UserRepository>();
+            services.AddTransient<WorkoutDetailRepository>();
+            services.AddTransient<WorkoutRepository>();
+            services.AddTransient<WorkoutTypeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
