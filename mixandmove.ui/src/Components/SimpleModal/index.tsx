@@ -4,10 +4,9 @@ import {
     Modal,
 } from 'reactstrap';
 import { SimpleModalProps } from '../../Helpers/Interfaces/SimpleModalInterfaces';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
-
-const SimpleModal = ({buttonLabel, className, id}: SimpleModalProps): JSX.Element => {
+const SimpleModal = ({buttonLabel, className, id, children }: SimpleModalProps): JSX.Element => {
     
     const [modal, setModal] = useState(false);
     
@@ -17,8 +16,8 @@ const SimpleModal = ({buttonLabel, className, id}: SimpleModalProps): JSX.Elemen
         <div>
         <Button className={className} id={id} onClick={toggle}>{buttonLabel}</Button>
         <Modal isOpen={modal} toggle={toggle}>
-          {React.cloneElement(SimpleModalProps.children)}
-          <i className="far fa-times-circle" onClick={toggle}></i>
+          {children}
+          <FontAwesomeIcon icon="times-circle" />
         </Modal>
       </div>
     )

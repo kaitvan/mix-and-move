@@ -4,7 +4,8 @@ declare module 'SimpleModalTypes' {
         className: string;
         modalTitle: string;
         id: number;
+        children: JSX.Element;
     }
 }
 
-export { SimpleModalProps };
+export { SimpleModalProps }
