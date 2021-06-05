@@ -12,11 +12,11 @@ class About extends Component {
                     <p>Click on a workout format to learn more.</p>
                     <div className="d-flex justify-content-center">
                         <SimpleModal buttonLabel='Time-Based' className='mini-bubble'>
-                            <h2>Time-Based</h2>
+                            <h3>Time-Based</h3>
                             <p>Start a new exercise every minute on the minute. With 40 seconds of work and 20 seconds of rest, you will complete 10 exercises in every 10-minute set.</p>
                         </SimpleModal>
                         <SimpleModal buttonLabel='Rep-Based' className='mini-bubble'>
-                            <h2>Rep-Based</h2>
+                            <h3>Rep-Based</h3>
                             <p>Start a new exercise every minute on the minute. Complete the reps required and then use the remainder of the minute to rest. Finish 10 exercises in every 10-minute set.</p>
                         </SimpleModal>
                         {/* <Button className="mini-bubble">Time-Based</Button>

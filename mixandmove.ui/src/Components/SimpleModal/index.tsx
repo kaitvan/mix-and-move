@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import {
     Button,
     Modal,
+    ModalBody,
 } from 'reactstrap';
 import { SimpleModalProps } from '../../Helpers/Interfaces/SimpleModalInterfaces';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SimpleModal = ({buttonLabel, className, id, children }: SimpleModalProps): JSX.Element => {
     
@@ -16,8 +16,10 @@ const SimpleModal = ({buttonLabel, className, id, children }: SimpleModalProps):
         <div>
         <Button className={className} id={id} onClick={toggle}>{buttonLabel}</Button>
         <Modal isOpen={modal} toggle={toggle}>
-          {children}
-          <FontAwesomeIcon icon="times-circle" />
+          <ModalBody className='simple-modal'>
+            {children}
+            <button onClick={toggle} className="close-modal-button"><i className="far fa-times-circle"></i></button>
+          </ModalBody>
         </Modal>
       </div>
     )
