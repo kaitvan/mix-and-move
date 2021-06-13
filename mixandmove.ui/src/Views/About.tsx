@@ -19,8 +19,6 @@ class About extends Component {
                             <h3>Rep-Based</h3>
                             <p>Start a new exercise every minute on the minute. Complete the reps required and then use the remainder of the minute to rest. Finish 10 exercises in every 10-minute set.</p>
                         </SimpleModal>
-                        {/* <Button className="mini-bubble">Time-Based</Button>
-                        <Button className="mini-bubble">Rep-Based</Button> */}
                     </div>
                 </div>
             </div>

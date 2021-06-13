@@ -26,5 +26,18 @@ namespace MixAndMove.Data
                         WHERE UserId = @userId";
             return db.Query<Workout>(sql, new { userId = userId }).ToList();
         }
+
+        public void Add(Workout workout)
+        {
+            using var db = new SqlConnection(ConnectionString);
+            var sql = @"INSERT INTO [Workouts]
+                               ([StartTime]
+                               ,[EndTime] 
+                               ,[UserId]
+                               ,[WorkoutTypeId])
+                        VALUES (@StartTime, @EndTime, @UserId, @WorkoutTypeId)";
+            var id = db.ExecuteScalar<int>(sql, workout);
+            workout.Id = id;
+        }
     }
 }
