@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'reactstrap';
-import { addWorkout } from '../../Helpers/Data/WorkoutData';
+import { addWorkout, addWorkoutDetails } from '../../Helpers/Data/WorkoutData';
 
 type PlanFormState = {
     workoutTypeId: string,
@@ -39,6 +39,28 @@ class PlanForm extends Component {
             workoutTypeId: 1,
         }
         addWorkout(workout);
+
+        // take the categories from state --> get an array of 10 movementCategories
+        // remove previously chosen movements
+        // loop through the categories from state and pull one random movement from each category
+        // create instance of workoutDetail in database
+        // stop when you reach 10 total movements
+
+        const { categories } = this.state;
+
+        const tenCategories : number[] = []
+
+        for (let i = 0; i < 10; i++) {
+            if (i >= categories.length) {
+              tenCategories.push(Number(categories[i % categories.length]))
+            } else {
+              tenCategories.push(Number(categories[i]))
+            }
+        }
+
+        const movements : string[] = []
+
+        tenCategories.forEach(category => )
     }
 
     render(): JSX.Element {
