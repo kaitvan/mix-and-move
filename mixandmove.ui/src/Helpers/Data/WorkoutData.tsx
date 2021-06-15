@@ -3,7 +3,7 @@ import { BaseURL } from '../config.json';
 import { Workout, WorkoutDetails } from '../Interfaces/WorkoutInterfaces';
 
 const workoutURL = `${BaseURL}/workouts`;
-const workoutDetailsURL = `${BaseURL}/WorkoutDetails`
+const workoutDetailsURL = `${BaseURL}/WorkoutDetails`;
 
 const addWorkout = (workout: Workout): Promise<Workout> => new Promise((resolve, reject) => {
     axios.post(`${workoutURL}`, workout).then((response) => {

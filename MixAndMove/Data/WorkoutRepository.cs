@@ -35,6 +35,7 @@ namespace MixAndMove.Data
                                ,[EndTime] 
                                ,[UserId]
                                ,[WorkoutTypeId])
+                        OUTPUT inserted.id
                         VALUES (@StartTime, @EndTime, @UserId, @WorkoutTypeId)";
             var id = db.ExecuteScalar<int>(sql, workout);
             workout.Id = id;

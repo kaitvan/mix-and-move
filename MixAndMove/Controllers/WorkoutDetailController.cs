@@ -27,9 +27,9 @@ namespace MixAndMove.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddWorkout(WorkoutDetail workoutDetail)
+        public IActionResult AddWorkoutDetail(WorkoutDetail workoutDetail)
         {
-            _repo.Add(workoutDetail);
+            _repo.AddWorkoutDetail(workoutDetail);
             return Created($"api/WorkoutDetails/{workoutDetail.Id}", workoutDetail);
         }
     }

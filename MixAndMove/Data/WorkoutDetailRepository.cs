@@ -27,7 +27,7 @@ namespace MixAndMove.Data
             return db.Query<WorkoutDetail>(sql, new { workoutId = workoutId });
         }
 
-        public void Add(WorkoutDetail workoutDetail)
+        public void AddWorkoutDetail(WorkoutDetail workoutDetail)
         {
             using var db = new SqlConnection(ConnectionString);
             var sql = @"INSERT INTO [WorkoutDetails]

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'reactstrap';
 import { addWorkout, addWorkoutDetails } from '../../Helpers/Data/WorkoutData';
+import { getMovementsByCategory } from '../../Helpers/Data/MovementData';
+import { Movement } from '../../Helpers/Interfaces/MovementInterfaces';
+import { Workout } from '../../Helpers/Interfaces/WorkoutInterfaces';
 
 type PlanFormState = {
     workoutTypeId: string,
@@ -12,7 +15,7 @@ class PlanForm extends Component {
     state: PlanFormState = {
         workoutTypeId: "",
         rounds: "",
-        categories: [],
+        categories: []
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -38,29 +41,36 @@ class PlanForm extends Component {
             userId: 1,
             workoutTypeId: 1,
         }
-        addWorkout(workout);
+        addWorkout(workout).then(async (response: Workout) => {
+            // get an array of movement arrays based on the categories selected
+            const { categories, rounds } = this.state;
+            const movementsByCategory: Movement[][] = await Promise.all(categories.map(async (categoryId): Promise<Movement[]> => {
+                return await getMovementsByCategory(Number(categoryId));
+            }))
 
-        // take the categories from state --> get an array of 10 movementCategories
-        // remove previously chosen movements
-        // loop through the categories from state and pull one random movement from each category
-        // create instance of workoutDetail in database
-        // stop when you reach 10 total movements
-
-        const { categories } = this.state;
-
-        const tenCategories : number[] = []
-
-        for (let i = 0; i < 10; i++) {
-            if (i >= categories.length) {
-              tenCategories.push(Number(categories[i % categories.length]))
-            } else {
-              tenCategories.push(Number(categories[i]))
+            // loop through the array of movement arrays and select a random movement from each category until you reach 10 total movements
+            const movements : Movement[] = []
+            for (let i = 0; i < 10; i++) {
+                if (i >= movementsByCategory.length) {
+                    const elementToLookAt = i % movementsByCategory.length;
+                    const randomIndex = Math.floor(Math.random() * movementsByCategory[elementToLookAt].length);
+                    movements.push(movementsByCategory[elementToLookAt][randomIndex]);
+                } else {
+                    const randomIndex = Math.floor(Math.random() * movementsByCategory[i].length);
+                    movements.push(movementsByCategory[i][randomIndex]);
+                }
             }
-        }
 
-        const movements : string[] = []
-
-        tenCategories.forEach(category => )
+            // post workoutDetails for each movement            
+            movements.forEach(movement => {
+                const workoutDetail = {
+                    workoutId: Number(response.id),
+                    movementId: Number(movement.id),
+                    seconds: 40 * Number(rounds),
+                }
+                addWorkoutDetails(workoutDetail);
+            })
+        });
     }
 
     render(): JSX.Element {
