@@ -25,5 +25,14 @@ namespace MixAndMove.Data
                         FROM Movements";
             return db.Query<Movement>(sql).ToList();
         }
+
+        public IEnumerable<Movement> GetMovementsByCategory(int categoryId)
+        {
+            using var db = new SqlConnection(ConnectionString);
+            var sql = @"SELECT *
+                        FROM Movements
+                        WHERE CategoryId = @categoryId";
+            return db.Query<Movement>(sql, new { categoryId = categoryId }).ToList();
+        }
     }
 }

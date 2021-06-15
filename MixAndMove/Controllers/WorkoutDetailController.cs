@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MixAndMove.Data;
+using MixAndMove.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,13 @@ namespace MixAndMove.Controllers
         public IActionResult GetWorkoutDetailsByWorkout(int workoutId)
         {
             return Ok(_repo.GetWorkoutDetailsByWorkout(workoutId));
+        }
+
+        [HttpPost]
+        public IActionResult AddWorkoutDetail(WorkoutDetail workoutDetail)
+        {
+            _repo.AddWorkoutDetail(workoutDetail);
+            return Created($"api/WorkoutDetails/{workoutDetail.Id}", workoutDetail);
         }
     }
 }

@@ -6,6 +6,13 @@ declare module 'WorkoutTypes' {
         userId: number;
         workoutTypeId: number;
     }
+
+    interface WorkoutDetails {
+        id: number;
+        workoutId: number;
+        movementId: number;
+        seconds: number;
+    }
 }
 
-export { Workout };
+export { Workout, WorkoutDetails };
