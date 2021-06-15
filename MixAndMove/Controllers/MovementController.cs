@@ -23,5 +23,11 @@ namespace MixAndMove.Controllers
         {
             return Ok(_repo.GetAllMovements());
         }
+
+        [HttpGet("{categoryId}")]
+        public IActionResult GetMovementsByCategory(int categoryId)
+        {
+            return Ok(_repo.GetMovementsByCategory(categoryId));
+        }
     }
 }
