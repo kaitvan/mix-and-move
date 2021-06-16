@@ -21,9 +21,10 @@ namespace MixAndMove.Data
         public IEnumerable<WorkoutDetail> GetWorkoutDetailsByWorkout(int workoutId)
         {
             using var db = new SqlConnection(ConnectionString);
-            var sql = @"SELECT *
+            var sql = @"SELECT WorkoutDetails.Id, WorkoutDetails.Seconds, WorkoutDetails.MovementId, Movements.Name, Movements.MovementVideo, Movements.BaseReps
                         FROM WorkoutDetails
-                        WHERE WorkoutId = @workoutId";
+                        JOIN Movements ON WorkoutDetails.MovementId = Movements.Id
+                        WHERE WorkoutDetails.WorkoutId = @workoutId";
             return db.Query<WorkoutDetail>(sql, new { workoutId = workoutId });
         }
 
