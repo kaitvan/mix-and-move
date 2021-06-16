@@ -1,0 +1,38 @@
+.workout-bubble {
+    width: 30vw;
+    border: black 1px solid;
+    border-radius: 10%;
+    padding: 30px;
+    margin: auto;
+    margin-top: 50px;
+    overflow: auto;
+}
+
+
+.movement-title {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.movement-image {
+    border-radius: 10%;
+    width: 85%;
+}
+
+.interval-timer {
+    margin-bottom: 10px;
+    font-size: 4em;
+}
+
+.timer-control-button {
+    margin-bottom: 20px;
+    background: none;
+}
+
+.timer-icon {
+    color: black;
+}
+
+.overall-timer {
+    font-weight: bold;
+}

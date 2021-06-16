@@ -11,5 +11,8 @@ namespace MixAndMove.Models
         public int WorkoutId { get; set; }
         public int MovementId { get; set; }
         public int Seconds { get; set; }
+        public string Name { get; set; }
+        public string MovementVideo { get; set; }
+        public int BaseReps { get; set; }
     }
 }
