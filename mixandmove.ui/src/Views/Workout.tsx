@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
+import { getWorkoutDetailsByWorkout } from '../Helpers/Data/WorkoutData';
 import { Movement } from '../Helpers/Interfaces/MovementInterfaces';
+import { WorkoutProps } from '../Helpers/Interfaces/WorkoutInterfaces';
 
 type WorkoutState = {
-    workoutId: string,
+    workoutId: number,
     movements: Movement[],
 }
 
-class Workout extends Component {
+class Workout extends Component<WorkoutProps> {
     state: WorkoutState = {
-        workoutId: '',
+        workoutId: this.props.location.state.currentWorkoutId,
         movements: [],
+    }
+
+    componentDidMount(): void {
+        const { workoutId } = this.state;
+        getWorkoutDetailsByWorkout(workoutId).then((response: Movement[]) => {
+            this.setState({
+                movements: response,
+            })
+        })
     }
 
     render(): JSX.Element {

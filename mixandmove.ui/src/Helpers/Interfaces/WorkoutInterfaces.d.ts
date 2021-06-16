@@ -1,3 +1,5 @@
+import { RouteComponentProps } from "react-router-dom";
+
 declare module 'WorkoutTypes' {
     interface Workout {
         id: number;
@@ -13,6 +15,12 @@ declare module 'WorkoutTypes' {
         movementId: number;
         seconds: number;
     }
+
+    interface WorkoutProps {
+        location: RouteComponentProps["location"],
+        history: RouteComponentProps["history"],
+        currentWorkoutId: number,
+    }
 }
 
-export { Workout, WorkoutDetails };
+export { Workout, WorkoutDetails, WorkoutProps };

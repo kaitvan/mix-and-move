@@ -7,6 +7,8 @@ import Profile from '../Views/Profile';
 import Plan from '../Views/Plan';
 import Workout from '../Views/Workout';
 
+import { WorkoutProps } from '../Helpers/Interfaces/WorkoutInterfaces'; 
+
 export default function Routes(): JSX.Element {
     return (
         <Switch>
@@ -14,7 +16,7 @@ export default function Routes(): JSX.Element {
             <Route exact path="/About" component={() => <About />}></Route>
             <Route exact path="/Profile" component={() => <Profile />}></Route>
             <Route exact path="/Plan" component={() => <Plan />}></Route>
-            <Route exact path="/Workout" component={() => <Workout />}></Route>
+            <Route exact path="/Workout" component={(props: WorkoutProps) => <Workout{...props}/>}></Route>
         </Switch>
     );
 }

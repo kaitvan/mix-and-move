@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { addWorkout, addWorkoutDetails } from '../../Helpers/Data/WorkoutData';
 import { getMovementsByCategory } from '../../Helpers/Data/MovementData';
 import { Movement } from '../../Helpers/Interfaces/MovementInterfaces';
 import { Workout } from '../../Helpers/Interfaces/WorkoutInterfaces';
+import { PlanProps } from '../../Helpers/Interfaces/PlanInterfaces';
 
 type PlanFormState = {
     workoutTypeId: string,
     rounds: string,
     categories: string[]
+    currentWorkoutId: number,
 }
 
-class PlanForm extends Component {
+class PlanForm extends Component<PlanProps> {
     state: PlanFormState = {
         workoutTypeId: "",
         rounds: "",
-        categories: []
+        categories: [],
+        currentWorkoutId: 0
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -43,6 +46,8 @@ class PlanForm extends Component {
             workoutTypeId: 1,
         }
         addWorkout(workout).then(async (response: Workout) => {
+            this.setState({ currentWorkoutId: response.id});
+            console.log('workoutIdOnPlanForm', this.state.currentWorkoutId);
             // get an array of movement arrays based on the categories selected
             const { categories, rounds } = this.state;
             const movementsByCategory: Movement[][] = await Promise.all(categories.map(async (categoryId): Promise<Movement[]> => {
@@ -62,7 +67,8 @@ class PlanForm extends Component {
                 }
             }
 
-            // post workoutDetails for each movement            
+            // post workoutDetails for each movement
+            
             movements.forEach(movement => {
                 const workoutDetail = {
                     workoutId: Number(response.id),
@@ -71,9 +77,9 @@ class PlanForm extends Component {
                 }
                 addWorkoutDetails(workoutDetail);
             })
-        });
 
-        
+            this.props.history.push('/workout', { currentWorkoutId: this.state.currentWorkoutId })
+        });
     }
 
     render(): JSX.Element {
@@ -99,7 +105,7 @@ class PlanForm extends Component {
                         </div>
                     </div>
                     <p>Let's do this!</p>
-                    <Button tag={Link} to="/Workout">Submit</Button>
+                    <Button>Submit</Button>
                 </Form>
             </div>
         )
@@ -107,4 +113,4 @@ class PlanForm extends Component {
 
 }
 
-export default PlanForm;
+export default withRouter(PlanForm);
