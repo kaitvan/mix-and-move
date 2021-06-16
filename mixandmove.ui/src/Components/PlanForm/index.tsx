@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import { addWorkout, addWorkoutDetails } from '../../Helpers/Data/WorkoutData';
 import { getMovementsByCategory } from '../../Helpers/Data/MovementData';
 import { Movement } from '../../Helpers/Interfaces/MovementInterfaces';
@@ -71,6 +72,8 @@ class PlanForm extends Component {
                 addWorkoutDetails(workoutDetail);
             })
         });
+
+        
     }
 
     render(): JSX.Element {
@@ -96,7 +99,7 @@ class PlanForm extends Component {
                         </div>
                     </div>
                     <p>Let's do this!</p>
-                    <Button>Submit</Button>
+                    <Button tag={Link} to="/Workout">Submit</Button>
                 </Form>
             </div>
         )
