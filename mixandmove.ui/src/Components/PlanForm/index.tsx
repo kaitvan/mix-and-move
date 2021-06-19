@@ -6,12 +6,14 @@ import { getMovementsByCategory } from '../../Helpers/Data/MovementData';
 import { Movement } from '../../Helpers/Interfaces/MovementInterfaces';
 import { Workout } from '../../Helpers/Interfaces/WorkoutInterfaces';
 import { PlanProps } from '../../Helpers/Interfaces/PlanInterfaces';
+import { User } from '../../Helpers/Interfaces/UserInterfaces';
 
 type PlanFormState = {
     workoutTypeId: string,
     rounds: string,
     categories: string[]
     currentWorkoutId: number,
+    user: User
 }
 
 class PlanForm extends Component<PlanProps> {
@@ -19,7 +21,8 @@ class PlanForm extends Component<PlanProps> {
         workoutTypeId: "",
         rounds: "",
         categories: [],
-        currentWorkoutId: 0
+        currentWorkoutId: 0,
+        user: this.props.user
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -42,7 +45,7 @@ class PlanForm extends Component<PlanProps> {
         const workout = {
             startTime: new Date(),
             endTime: new Date(),
-            userId: 1,
+            userId: this.state.user.id,
             workoutTypeId: 1,
         }
         addWorkout(workout).then(async (response: Workout) => {
@@ -82,6 +85,7 @@ class PlanForm extends Component<PlanProps> {
     }
 
     render(): JSX.Element {
+        console.log('user on plan form component', this.state.user)
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>

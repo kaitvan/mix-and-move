@@ -20,6 +20,8 @@ declare module 'WorkoutTypes' {
         location: RouteComponentProps["location"],
         history: RouteComponentProps["history"],
         currentWorkoutId: number,
+        user: User,
+        workout: Workout
     }
 }
 

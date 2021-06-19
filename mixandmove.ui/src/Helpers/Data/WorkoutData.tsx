@@ -23,4 +23,10 @@ const getWorkoutDetailsByWorkout = (workoutId: number): Promise<WorkoutDetails[]
     }).catch((error) => reject(error));
 })
 
-export { addWorkout, addWorkoutDetails, getWorkoutDetailsByWorkout }
+const getWorkoutsByUser = (userId: number): Promise<Workout[]> => new Promise((resolve, reject) => {
+    axios.get(`${workoutURL}/${userId}`).then((response) => {
+        resolve(response.data)
+    }).catch((error) => reject(error));
+});
+
+export { addWorkout, addWorkoutDetails, getWorkoutDetailsByWorkout, getWorkoutsByUser }

@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import PlanForm from '../Components/PlanForm';
+import { PlanProps } from '../Helpers/Interfaces/PlanInterfaces';
+import { User } from '../Helpers/Interfaces/UserInterfaces';
 
-class Plan extends Component {
-    // state = {
-    //     currentTab: 0,
-    // }
+type PlanState = {
+    user: User
+}
+
+class Plan extends Component<PlanProps> {
+    state: PlanState = {
+        //currentTab: 0,
+        user: this.props.user
+    }
 
     // showTab(n: number): number {
     //     const x = document.getElementsByClassName('tab') as HTMLCollectionOf<HTMLElement>;
@@ -54,10 +61,11 @@ class Plan extends Component {
     // }
 
     render(): JSX.Element {
+        console.log("user on plan component", this.state.user)
         return (
             <div>
                 <div className='bubble'>
-                    <PlanForm/>
+                    <PlanForm user={this.state.user}/>
                 </div>
             </div>
         )
