@@ -133,6 +133,7 @@ class Workout extends Component<WorkoutProps> {
                     <div className="overall-timer">
                         {totalTime}
                     </div>
+                    <Button onClick={() => this.endWorkout()}>END</Button>
                 </div>
                 }
                 { movements.length && !end && !isWorkTime &&
@@ -146,6 +147,7 @@ class Workout extends Component<WorkoutProps> {
                     <div className="overall-timer">
                         {totalTime}
                     </div>
+                    <Button onClick={() => this.endWorkout()}>END</Button>
                 </div>
                 }
                 { end &&

@@ -36,6 +36,17 @@ namespace MixAndMove.Controllers
             return Ok(user);
         }
 
+        [HttpGet("firebase/{firebaseUid}")]
+        public IActionResult GetUserByFirebaseUid(string firebaseUid)
+        {
+            var user = _repo.GetUserByFirebaseUid(firebaseUid);
+            if (user == null)
+            {
+                return NotFound("This user does not exist.");
+            }
+            return Ok(user);
+        }
+
         [HttpPost]
         public IActionResult AddUser(User user)
         {
