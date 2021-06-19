@@ -33,6 +33,16 @@ namespace MixAndMove.Data
             return db.QueryFirstOrDefault<User>(sql, new { id = id });
         }
 
+        public User GetUserByFirebaseUid(string firebaseUid)
+        {
+            using var db = new SqlConnection(ConnectionString);
+            var sql = @"SELECT *
+                        FROM Users
+                        WHERE FirebaseUid = @firebaseUid";
+            var user = db.QueryFirstOrDefault<User>(sql, new { firebaseUid = firebaseUid });
+            return user;
+        }
+
         public void AddUser(User user)
         {
             using var db = new SqlConnection(ConnectionString);

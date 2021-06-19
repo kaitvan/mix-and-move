@@ -83,10 +83,8 @@ class Workout extends Component<WorkoutProps> {
 
     handleClick = (): void => {
         if (this.state.running) {
-            console.log("pause clicked");
             clearInterval(this.timer);
         } else {
-            console.log("play clicked");
             this.timer = setInterval(() => {
                 this.countDown();
             }, 1000)
@@ -133,6 +131,7 @@ class Workout extends Component<WorkoutProps> {
                     <div className="overall-timer">
                         {totalTime}
                     </div>
+                    <Button onClick={() => this.endWorkout()}>END</Button>
                 </div>
                 }
                 { movements.length && !end && !isWorkTime &&
@@ -146,6 +145,7 @@ class Workout extends Component<WorkoutProps> {
                     <div className="overall-timer">
                         {totalTime}
                     </div>
+                    <Button onClick={() => this.endWorkout()}>END</Button>
                 </div>
                 }
                 { end &&
