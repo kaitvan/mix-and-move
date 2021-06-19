@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { Button } from 'reactstrap';
 import { getWorkoutDetailsByWorkout } from '../Helpers/Data/WorkoutData';
 import { Movement } from '../Helpers/Interfaces/MovementInterfaces';
@@ -16,6 +16,8 @@ type WorkoutState = {
 }
 
 class Workout extends Component<WorkoutProps> {
+    private timer: any;
+
     state: WorkoutState = {
         workoutId: this.props.location.state.currentWorkoutId,
         rounds: this.props.location.state.rounds,
@@ -24,7 +26,7 @@ class Workout extends Component<WorkoutProps> {
         end: false,
         totalTimeInSeconds: 0,
         intervalTimeInSeconds: 40,
-        isWorkTime: true
+        isWorkTime: true,
     }
 
     componentDidMount(): void {
@@ -35,15 +37,50 @@ class Workout extends Component<WorkoutProps> {
                 movements: response,
             })
         })
+        this.timer = setInterval(() => {
+            this.countDown();
+        }, 1000)
+    }
+
+    countDown = (): void => {
+        if (this.state.totalTimeInSeconds > 0) {
+            this.setState({
+                totalTimeInSeconds: this.state.totalTimeInSeconds - 1
+            })
+        } else {
+            clearInterval(this.timer);
+            this.setState({
+                end: true
+            })
+        }
+        if (this.state.intervalTimeInSeconds > 0) {
+            this.setState({
+                intervalTimeInSeconds: this.state.intervalTimeInSeconds - 1
+            })
+        } else {
+            this.setState({
+                isWorkTime: !this.state.isWorkTime,
+            })
+            if (this.state.isWorkTime) {
+                this.setState({
+                    intervalTimeInSeconds: 39,
+                })
+                const { currentIndex } = this.state;
+                if (currentIndex < 9) {
+                    this.setState({ currentIndex: currentIndex + 1 })
+                } else {
+                    this.setState({ end: true })
+                }
+            } else {
+                this.setState({
+                    intervalTimeInSeconds: 19,
+                })
+            }
+        }
     }
 
     handleClick = (): void => {
-        const { currentIndex } = this.state;
-        if (currentIndex < 9) {
-            this.setState({ currentIndex: currentIndex + 1 })
-        } else {
-            this.setState({ end: true })
-        }
+        console.log("pause clicked");
     }
 
     endWorkout = (): void => {
@@ -59,9 +96,9 @@ class Workout extends Component<WorkoutProps> {
         if (minutes < 10 && seconds < 10) {
             totalTime = `0${minutes}:0${seconds}`
         } else if (minutes < 10) {
-            `0${minutes}:${seconds}`
+            totalTime = `0${minutes}:${seconds}`
         } else if (seconds < 10) {
-            `${minutes}:0${seconds}`
+            totalTime = `${minutes}:0${seconds}`
         }
 
         return (
