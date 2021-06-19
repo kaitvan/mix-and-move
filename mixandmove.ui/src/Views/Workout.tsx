@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import { getWorkoutDetailsByWorkout } from '../Helpers/Data/WorkoutData';
 import { Movement } from '../Helpers/Interfaces/MovementInterfaces';
@@ -13,6 +13,7 @@ type WorkoutState = {
     totalTimeInSeconds: number,
     intervalTimeInSeconds: number,
     isWorkTime: boolean,
+    running: boolean
 }
 
 class Workout extends Component<WorkoutProps> {
@@ -27,6 +28,7 @@ class Workout extends Component<WorkoutProps> {
         totalTimeInSeconds: 0,
         intervalTimeInSeconds: 40,
         isWorkTime: true,
+        running: true
     }
 
     componentDidMount(): void {
@@ -80,15 +82,30 @@ class Workout extends Component<WorkoutProps> {
     }
 
     handleClick = (): void => {
-        console.log("pause clicked");
+        if (this.state.running) {
+            console.log("pause clicked");
+            clearInterval(this.timer);
+        } else {
+            console.log("play clicked");
+            this.timer = setInterval(() => {
+                this.countDown();
+            }, 1000)
+        }
+        this.setState({
+            running: !this.state.running
+        })
     }
 
     endWorkout = (): void => {
         this.props.history.push('/profile');
     }
 
+    componentWillUnmount(): void {
+        clearInterval(this.timer);
+    }
+
     render(): JSX.Element {
-        const { movements, currentIndex, end, totalTimeInSeconds, intervalTimeInSeconds, isWorkTime } = this.state;
+        const { movements, currentIndex, end, totalTimeInSeconds, intervalTimeInSeconds, isWorkTime, running } = this.state;
         const minutes = Math.floor(totalTimeInSeconds/60);
         const seconds = totalTimeInSeconds % 60;
 
@@ -101,6 +118,8 @@ class Workout extends Component<WorkoutProps> {
             totalTime = `${minutes}:0${seconds}`
         }
 
+        const controlButton = running ? <i className="far fa-pause-circle fa-3x timer-icon"></i> : <i className="far fa-play-circle fa-3x timer-icon"></i>
+
         return (
             <div>
                 { movements.length && !end && isWorkTime &&
@@ -110,7 +129,7 @@ class Workout extends Component<WorkoutProps> {
                     <div className="interval-timer">
                         {intervalTimeInSeconds < 10 ? (`00:0${intervalTimeInSeconds}`) : (`00:${intervalTimeInSeconds}`)}
                     </div>
-                    <button className="timer-control-button" onClick={() => this.handleClick()}><i className="far fa-pause-circle fa-3x timer-icon"></i></button>
+                    <button className="timer-control-button" onClick={() => this.handleClick()}>{controlButton}</button>
                     <div className="overall-timer">
                         {totalTime}
                     </div>
@@ -123,7 +142,7 @@ class Workout extends Component<WorkoutProps> {
                     <div className="interval-timer">
                         {intervalTimeInSeconds < 10 ? (`00:0${intervalTimeInSeconds}`) : (`00:${intervalTimeInSeconds}`)}
                     </div>
-                    <button className="timer-control-button" onClick={() => this.handleClick()}><i className="far fa-pause-circle fa-3x timer-icon"></i></button>
+                    <button className="timer-control-button" onClick={() => this.handleClick()}>{controlButton}</button>
                     <div className="overall-timer">
                         {totalTime}
                     </div>
