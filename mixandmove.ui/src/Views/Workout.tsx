@@ -3,6 +3,7 @@ import { Button } from 'reactstrap';
 import { getWorkoutDetailsByWorkout } from '../Helpers/Data/WorkoutData';
 import { Movement } from '../Helpers/Interfaces/MovementInterfaces';
 import { WorkoutProps } from '../Helpers/Interfaces/WorkoutInterfaces';
+import { User } from '../Helpers/Interfaces/UserInterfaces';
 
 type WorkoutState = {
     workoutId: number,
@@ -13,7 +14,8 @@ type WorkoutState = {
     totalTimeInSeconds: number,
     intervalTimeInSeconds: number,
     isWorkTime: boolean,
-    running: boolean
+    running: boolean,
+    user: User
 }
 
 class Workout extends Component<WorkoutProps> {
@@ -28,7 +30,8 @@ class Workout extends Component<WorkoutProps> {
         totalTimeInSeconds: 0,
         intervalTimeInSeconds: 40,
         isWorkTime: true,
-        running: true
+        running: true,
+        user: this.props.user
     }
 
     componentDidMount(): void {
@@ -95,7 +98,7 @@ class Workout extends Component<WorkoutProps> {
     }
 
     endWorkout = (): void => {
-        this.props.history.push('/profile');
+        this.props.history.push('/profile', { user: this.state.user});
     }
 
     componentWillUnmount(): void {
@@ -103,6 +106,7 @@ class Workout extends Component<WorkoutProps> {
     }
 
     render(): JSX.Element {
+        console.log('user on workout component', this.state.user)
         const { movements, currentIndex, end, totalTimeInSeconds, intervalTimeInSeconds, isWorkTime, running } = this.state;
         const minutes = Math.floor(totalTimeInSeconds/60);
         const seconds = totalTimeInSeconds % 60;

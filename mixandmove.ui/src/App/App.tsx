@@ -36,11 +36,12 @@ class App extends Component<AppState> {
 
   render(): JSX.Element {
     const { user } = this.state;
+    console.log('user on app component', user)
     return (
       <div className="App">
         <Navigation user={user}/>
         <Router>
-          <Routes></Routes>
+          <Routes user={user}></Routes>
         </Router>
       </div>
     )

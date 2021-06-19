@@ -9,7 +9,7 @@ type AuthProps = {
 }
 
 class Auth extends Component<AuthProps> {
-    signInClickEvent = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    signInClickEvent = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         e.preventDefault();
         const provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then((user) => {
@@ -26,7 +26,7 @@ class Auth extends Component<AuthProps> {
         })
     }
 
-    signOutClickEvent = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    signOutClickEvent = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         e.preventDefault();
         window.sessionStorage.removeItem('token');
         firebase.auth().signOut();

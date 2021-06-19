@@ -1,0 +1,31 @@
+.profile-container {
+    width: 30%;
+}
+
+.profile-bubble {
+    display: flex;
+    flex-direction: column;
+    border: black 1px solid;
+    border-radius: 10%;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    width: 200px;
+    padding: 30px 0;
+}
+
+.workout-log-container {
+    width: 70%;
+    margin: 20px;
+    padding-left: 20px;
+}
+
+.log-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: left;
+}
