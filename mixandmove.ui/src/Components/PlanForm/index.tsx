@@ -78,7 +78,7 @@ class PlanForm extends Component<PlanProps> {
                 addWorkoutDetails(workoutDetail);
             })
 
-            this.props.history.push('/workout', { currentWorkoutId: this.state.currentWorkoutId })
+            this.props.history.push('/workout', { currentWorkoutId: this.state.currentWorkoutId, rounds: Number(this.state.rounds) })
         });
     }
 
