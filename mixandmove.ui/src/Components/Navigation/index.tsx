@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Auth from '../Auth';
 import {
   Collapse,
   Navbar,
@@ -8,7 +9,6 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
-import Auth from '../../Components/Auth';
 import { User } from '../../Helpers/Interfaces/UserInterfaces';
 
 type NavProps = {
@@ -38,7 +38,9 @@ const Navigation = ({ user }: NavProps): JSX.Element => {
             <Auth user={user} />
           </Nav>
         </Collapse>
+
       </Navbar>
+      
     </div>
   );
 }

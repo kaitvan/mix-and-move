@@ -83,10 +83,8 @@ class Workout extends Component<WorkoutProps> {
 
     handleClick = (): void => {
         if (this.state.running) {
-            console.log("pause clicked");
             clearInterval(this.timer);
         } else {
-            console.log("play clicked");
             this.timer = setInterval(() => {
                 this.countDown();
             }, 1000)

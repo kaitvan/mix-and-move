@@ -47,7 +47,6 @@ class PlanForm extends Component<PlanProps> {
         }
         addWorkout(workout).then(async (response: Workout) => {
             this.setState({ currentWorkoutId: response.id});
-            console.log('workoutIdOnPlanForm', this.state.currentWorkoutId);
             // get an array of movement arrays based on the categories selected
             const { categories, rounds } = this.state;
             const movementsByCategory: Movement[][] = await Promise.all(categories.map(async (categoryId): Promise<Movement[]> => {

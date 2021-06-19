@@ -1,15 +1,15 @@
-import React, { Component, MouseEvent } from 'react';
+import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import { User } from '../../Helpers/Interfaces/UserInterfaces';
 import userData from '../../Helpers/Data/UserData';
-import { NavItem, NavLink } from 'reactstrap';
+import { NavItem } from 'reactstrap';
 
 type AuthProps = {
     user: User | null
 }
 
 class Auth extends Component<AuthProps> {
-    signInClickEvent = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    signInClickEvent = (e: React.MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
         const provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then((user) => {
@@ -26,7 +26,7 @@ class Auth extends Component<AuthProps> {
         })
     }
 
-    signOutClickEvent = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    signOutClickEvent = (e: React.MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
         window.sessionStorage.removeItem('token');
         firebase.auth().signOut();
@@ -37,20 +37,19 @@ class Auth extends Component<AuthProps> {
         const { user } = this.props;
         if (user == false) {
             return (
-                <link onClick={() => this.signInClickEvent}>Sign In</link>
+                <button className='auth-button' onClick={this.signInClickEvent}>Sign In</button>
             )
         } else {
             return (
-                <link onClick={() => this.signOutClickEvent}>Sign Out</link>
+                <button className='auth-button' onClick={this.signOutClickEvent}>Sign Out</button>
             )
         }
     }
 
     render(): JSX.Element {
-        console.log("user on auth component", this.props.user);
         return (
             <NavItem>
-                {this.signInOrOut}
+                {this.signInOrOut()}
             </NavItem>
         )
     }
