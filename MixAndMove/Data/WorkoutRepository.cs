@@ -23,7 +23,8 @@ namespace MixAndMove.Data
             using var db = new SqlConnection(ConnectionString);
             var sql = @"SELECT *
                         FROM Workouts
-                        WHERE UserId = @userId";
+                        WHERE UserId = @userId
+                        ORDER BY startTime DESC";
             return db.Query<Workout>(sql, new { userId = userId }).ToList();
         }
 
@@ -32,13 +33,24 @@ namespace MixAndMove.Data
             using var db = new SqlConnection(ConnectionString);
             var sql = @"INSERT INTO [Workouts]
                                ([StartTime]
-                               ,[EndTime] 
+                               ,[TotalTime] 
                                ,[UserId]
                                ,[WorkoutTypeId])
                         OUTPUT inserted.id
-                        VALUES (@StartTime, @EndTime, @UserId, @WorkoutTypeId)";
+                        VALUES (@StartTime, @TotalTime, @UserId, @WorkoutTypeId)";
             var id = db.ExecuteScalar<int>(sql, workout);
             workout.Id = id;
+        }
+
+        public void UpdateTime(Workout workout)
+        {
+            using var db = new SqlConnection(ConnectionString);
+            var sql = @"UPDATE [Workouts]
+                        SET TotalTime = @TotalTime,
+                            UserId = @UserId,
+                            WorkoutTypeId = @WorkoutTypeId
+                        WHERE Id = @id";
+            db.Execute(sql, workout);
         }
     }
 }

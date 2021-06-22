@@ -31,5 +31,12 @@ namespace MixAndMove.Controllers
             _repo.Add(workout);
             return Created($"api/workouts/{workout.Id}", workout);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateTime(Workout workout)
+        {
+            _repo.UpdateTime(workout);
+            return Ok();
+        }
     }
 }
