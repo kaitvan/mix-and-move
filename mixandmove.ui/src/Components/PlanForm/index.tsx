@@ -13,7 +13,8 @@ type PlanFormState = {
     rounds: string,
     categories: string[]
     currentWorkoutId: number,
-    user: User
+    user: User,
+    date: Date,
 }
 
 class PlanForm extends Component<PlanProps> {
@@ -22,7 +23,8 @@ class PlanForm extends Component<PlanProps> {
         rounds: "",
         categories: [],
         currentWorkoutId: 0,
-        user: this.props.user
+        user: this.props.user,
+        date: new Date()
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -43,8 +45,8 @@ class PlanForm extends Component<PlanProps> {
     handleSubmit = (e: React.ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
         const workout = {
-            startTime: new Date(),
-            endTime: new Date(),
+            startTime: this.state.date,
+            totalTime: Number(this.state.rounds) * 600,
             userId: this.state.user.id,
             workoutTypeId: 1,
         }
@@ -70,7 +72,6 @@ class PlanForm extends Component<PlanProps> {
             }
 
             // post workoutDetails for each movement
-            
             movements.forEach(movement => {
                 const workoutDetail = {
                     workoutId: Number(response.id),
@@ -80,7 +81,7 @@ class PlanForm extends Component<PlanProps> {
                 addWorkoutDetails(workoutDetail);
             })
 
-            this.props.history.push('/workout', { currentWorkoutId: this.state.currentWorkoutId, rounds: Number(this.state.rounds) })
+            this.props.history.push('/workout', { currentWorkoutId: this.state.currentWorkoutId, rounds: Number(this.state.rounds), workoutStartDate: this.state.date })
         });
     }
 

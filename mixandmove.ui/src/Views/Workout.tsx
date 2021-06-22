@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import { getWorkoutDetailsByWorkout } from '../Helpers/Data/WorkoutData';
+import { getWorkoutDetailsByWorkout, updateTime } from '../Helpers/Data/WorkoutData';
 import { Movement } from '../Helpers/Interfaces/MovementInterfaces';
 import { WorkoutProps } from '../Helpers/Interfaces/WorkoutInterfaces';
 import { User } from '../Helpers/Interfaces/UserInterfaces';
@@ -8,6 +8,7 @@ import { User } from '../Helpers/Interfaces/UserInterfaces';
 type WorkoutState = {
     workoutId: number,
     rounds: number,
+    workoutStartTime: Date,
     movements: Movement[],
     currentIndex: number,
     end: boolean,
@@ -24,6 +25,7 @@ class Workout extends Component<WorkoutProps> {
     state: WorkoutState = {
         workoutId: this.props.location.state.currentWorkoutId,
         rounds: this.props.location.state.rounds,
+        workoutStartTime: this.props.location.state.workoutStartTime,
         movements: [],
         currentIndex: 0,
         end: false,
@@ -98,7 +100,15 @@ class Workout extends Component<WorkoutProps> {
     }
 
     endWorkout = (): void => {
-        this.props.history.push('/profile', { user: this.state.user});
+        const workout = {
+            id: this.state.workoutId,
+            totalTime: Number(this.state.rounds) * 600 - this.state.totalTimeInSeconds,
+            userId: this.state.user.id,
+            workoutTypeId: 1,
+        }
+        updateTime(workout).then(() => {
+            this.props.history.push('/profile', { user: this.state.user});
+        });
     }
 
     componentWillUnmount(): void {
@@ -111,13 +121,13 @@ class Workout extends Component<WorkoutProps> {
         const minutes = Math.floor(totalTimeInSeconds/60);
         const seconds = totalTimeInSeconds % 60;
 
-        let totalTime = `${minutes}:${seconds}`
+        let clockTime = `${minutes}:${seconds}`
         if (minutes < 10 && seconds < 10) {
-            totalTime = `0${minutes}:0${seconds}`
+            clockTime = `0${minutes}:0${seconds}`
         } else if (minutes < 10) {
-            totalTime = `0${minutes}:${seconds}`
+            clockTime = `0${minutes}:${seconds}`
         } else if (seconds < 10) {
-            totalTime = `${minutes}:0${seconds}`
+            clockTime = `${minutes}:0${seconds}`
         }
 
         const controlButton = running ? <i className="far fa-pause-circle fa-3x timer-icon"></i> : <i className="far fa-play-circle fa-3x timer-icon"></i>
@@ -133,7 +143,7 @@ class Workout extends Component<WorkoutProps> {
                     </div>
                     <button className="timer-control-button" onClick={() => this.handleClick()}>{controlButton}</button>
                     <div className="overall-timer">
-                        {totalTime}
+                        {clockTime}
                     </div>
                     <Button onClick={() => this.endWorkout()}>END</Button>
                 </div>
@@ -147,7 +157,7 @@ class Workout extends Component<WorkoutProps> {
                     </div>
                     <button className="timer-control-button" onClick={() => this.handleClick()}>{controlButton}</button>
                     <div className="overall-timer">
-                        {totalTime}
+                        {clockTime}
                     </div>
                     <Button onClick={() => this.endWorkout()}>END</Button>
                 </div>

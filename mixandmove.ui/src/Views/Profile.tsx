@@ -45,7 +45,7 @@ class Profile extends Component<UserProps> {
     render(): JSX.Element {
         const { user, workouts } = this.state;
         const workoutRow = (workout: Workout): JSX.Element => {
-            return <WorkoutLog workoutTypeId={workout.workoutTypeId} startTime={workout.startTime} endTime={workout.endTime} />;
+            return <WorkoutLog workoutTypeId={workout.workoutTypeId} startTime={workout.startTime} totalTime={workout.totalTime} />;
         }
         const rows = workouts.map(workoutRow);
 
