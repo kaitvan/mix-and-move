@@ -1,6 +1,6 @@
 import { WorkoutProps } from '../../Helpers/Interfaces/WorkoutInterfaces';
 
-export const WorkoutLog = ({ startTime, endTime, workoutTypeId }: WorkoutProps): JSX.Element => {
+export const WorkoutLog = ({ startTime, totalTime, workoutTypeId }: WorkoutProps): JSX.Element => {
 
     const getWorkoutType = (): string => {
         return workoutTypeId == 1 ? 'Time-Based Workout' : 'Rep-Based Workout';
@@ -12,21 +12,18 @@ export const WorkoutLog = ({ startTime, endTime, workoutTypeId }: WorkoutProps):
     }
 
     const calculateTotalTime = (): string => {
-        const difference = Date.parse(endTime) - Date.parse(startTime);
-        const differenceInSeconds = Number(difference/1000);
+        const minutes = Math.floor(totalTime/60);
+        const seconds = totalTime % 60;
 
-        const minutes = Math.floor(differenceInSeconds/60);
-        const seconds = differenceInSeconds % 60;
-
-        let totalTime = `${minutes}:${seconds}`
+        let clockTime = `${minutes}:${seconds}`
         if (minutes < 10 && seconds < 10) {
-            totalTime = `0${minutes}:0${seconds}`
+            clockTime = `0${minutes}:0${seconds}`
         } else if (minutes < 10) {
-            totalTime = `0${minutes}:${seconds}`
+            clockTime = `0${minutes}:${seconds}`
         } else if (seconds < 10) {
-            totalTime = `${minutes}:0${seconds}`
+            clockTime = `${minutes}:0${seconds}`
         }
-        return totalTime;
+        return clockTime;
     }
 
     return (

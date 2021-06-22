@@ -29,4 +29,11 @@ const getWorkoutsByUser = (userId: number): Promise<Workout[]> => new Promise((r
     }).catch((error) => reject(error));
 });
 
-export { addWorkout, addWorkoutDetails, getWorkoutDetailsByWorkout, getWorkoutsByUser }
+const updateTime = (workout: Workout): Promise<Workout> => axios({
+    method: 'PUT',
+    url: `${workoutURL}/${workout.id}`,
+    data: JSON.stringify(workout),
+    headers:{'Content-Type': 'application/json; charset=utf-8'}
+})
+
+export { addWorkout, addWorkoutDetails, getWorkoutDetailsByWorkout, getWorkoutsByUser, updateTime }

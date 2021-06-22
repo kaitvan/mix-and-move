@@ -4,7 +4,7 @@ declare module 'WorkoutTypes' {
     interface Workout {
         id: number;
         startTime: Date;
-        endTime: Date;
+        totalTime: number;
         userId: number;
         workoutTypeId: number;
     }
